@@ -2,6 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/MovGP0/roslyn-analyzers</PackageProjectUrl>
+    <Authors>Johann Dirry</Authors>
+    <Company />
+    <Product>Roslyn.Analyzers.ClassModifiers</Product>
+    <PackageId>Roslyn.Analyzers.ClassModifiers</PackageId>
+    <RepositoryUrl>https://github.com/MovGP0/roslyn-analyzers.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <Copyright>2018</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
