@@ -29,7 +29,7 @@ namespace Analyzers.ClassModifiers
             context.ReportDiagnostic(diagnostic);
         }
 
-        private const string Id = "CS0000";
+        private const string Id = "class_inheritance_modifiers";
         private static readonly LocalizableString Title = new LocalizableResourceString(nameof(Resources.AnalyzerTitle), Resources.ResourceManager, typeof(Resources));
         private static readonly LocalizableString MessageFormat = new LocalizableResourceString(nameof(Resources.AnalyzerMessageFormat), Resources.ResourceManager, typeof(Resources));
         private const string Category = "Design";

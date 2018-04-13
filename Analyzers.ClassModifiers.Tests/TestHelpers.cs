@@ -21,9 +21,8 @@ namespace Analyzers.ClassModifiers.Tests
             var code = File.ReadAllText(file);
             var tree = CSharpSyntaxTree.ParseText(code);
 
-            var compilation = CSharpCompilation.Create(Guid.NewGuid().ToString("N"),
-                syntaxTrees: new[] { tree },
-                references: new[]
+            var compilation = CSharpCompilation.Create(Guid.NewGuid().ToString("N"), new[] { tree },
+                new[]
                 {
                     MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
                     MetadataReference.CreateFromFile(typeof(Assert).Assembly.Location)
@@ -40,8 +39,12 @@ namespace Analyzers.ClassModifiers.Tests
         {
             var action = actions.First(_ => _.Title == title);
 
-            var operation = (await action.GetOperationsAsync(
-                new CancellationToken(false)).ConfigureAwait(false)).ToArray()[0] as ApplyChangesOperation;
+            var operation = (await action.GetOperationsAsync(new CancellationToken()).ConfigureAwait(false)).FirstOrDefault() as ApplyChangesOperation;
+            if (operation == null)
+            {
+                Assert.Inconclusive("Could not get operation");
+            }
+
             var newDoc = operation.ChangedSolution.GetDocument(document.Id);
             var newTree = await newDoc.GetSyntaxTreeAsync().ConfigureAwait(false);
             var changes = newTree.GetChanges(tree);
@@ -55,8 +58,7 @@ namespace Analyzers.ClassModifiers.Tests
             }
         }
 
-        internal static async Task RunAnalysisAsync<T>(string path, IEnumerable<string> diagnosticIds,
-            Action<ImmutableArray<Diagnostic>> diagnosticInspector = null)
+        internal static async Task RunAnalysisAsync<T>(string path, IEnumerable<string> diagnosticIds, Action<ImmutableArray<Diagnostic>> diagnosticInspector = null)
             where T : DiagnosticAnalyzer, new()
         {
             var code = File.ReadAllText(path);
@@ -82,7 +84,7 @@ namespace Analyzers.ClassModifiers.Tests
 
         internal static Document Create(string code)
         {
-            var name = "Test";
+            const string name = "Test";
             var projectId = ProjectId.CreateNewId(name);
 
             var solution = new AdhocWorkspace()

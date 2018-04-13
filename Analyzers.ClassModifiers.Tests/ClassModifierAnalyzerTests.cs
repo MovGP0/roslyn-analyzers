@@ -16,7 +16,7 @@ namespace Analyzers.ClassModifiers.Tests
         {
             await RunAnalysisAsync<ClassModifierAnalyzer>(
                 $"{BasePath}{nameof(AnalyzeWhenClassHasNoInheritanceModifiers)}.cs",
-                new []{ "CS0000" }).ConfigureAwait(false);
+                new []{ "class_inheritance_modifiers" }).ConfigureAwait(false);
         }
 
         [Test]
